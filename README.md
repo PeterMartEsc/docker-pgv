@@ -4,7 +4,7 @@ __Autor:__ _Pedro Martín Escuela_
 
 En este repositorio trabajaremos las diferentes tareas con  Docker, en la asignatura de PGV.
 
-<div style="text-align: center;">
+<div align=center>
 
 <img src="./recursos-compartidos/Docker-Logo.png" alt="docker-logo" width="400">
 
