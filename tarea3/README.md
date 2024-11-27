@@ -12,7 +12,7 @@ Consulta los comandos de docker en el siguiente [enlace](https://github.com/jpex
 
 > Debemos tener el contenedor docker corriendo
 
-<img src="" alt="mostrar contenedor corriendo">
+<img src="./capturas/1.png" alt="mostrar contenedor corriendo">
 
 ### Prueba con una aplicación de ejemplo
 
