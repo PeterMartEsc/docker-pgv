@@ -1,6 +1,6 @@
 <div style="text-align: justify;">
 
-# <img src="./capturas/docker-icon.png" width="40"> Tarea 1 - Docker
+# <img src="../recursos-compartidos/docker-icon.png" width="40"> Tarea 1 - Docker
 
 ### Paso 1: Trabajar con imágenes de Docker
 

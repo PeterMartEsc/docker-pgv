@@ -1,8 +1,8 @@
 <div style="text-align: justify;">
 
-# <img src="./capturas/docker-icon.png" width="40"> Tarea 2 - Docker
+# <img src="../recursos-compartidos/docker-icon.png" width="40"> Tarea 2 - Docker
 
-### Objetivo:
+## Objetivo:
 
 Configurar un contenedor Docker que ejecute Apache Tomcat y que esté accesible desde un puerto específico en la máquina anfitriona.
 
