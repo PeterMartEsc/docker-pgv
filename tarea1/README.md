@@ -59,9 +59,8 @@ Al listar las imágenes de Docker de nuevo:
     docker images
 ```
 
-mostrará la nueva imagen, así como la anterior de la que se derivó, mostrándonos lo siguiente
+Mostrará la nueva imagen, así como la anterior de la que se derivó, mostrándonos lo siguiente
 
 <img src="./capturas/5.png" alt="captura 5">
-
 
 </div>
