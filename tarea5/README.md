@@ -18,7 +18,7 @@ Listamos el conjunto de redes disponibles en este momento mediante:
 
 Obteniendo lo siguiente:
 
-<img src="./capturas/1.png">
+<img src="./capturas/1.png" alt="captura 1">
 
 ## Pasos a Seguir
 
@@ -35,7 +35,7 @@ __Explicación del comando:__
 - `docker network create`: Crea una nueva red Docker.
 - `tomcat-network`: Es el nombre de la red personalizada.
 
-<img src="./capturas/2.png">
+<img src="./capturas/2.png" alt="captura 2">
 
 ### 2. - Levanta los Servidores Tomcat
 
@@ -64,6 +64,95 @@ Como ya hemos mencionado anteriormente:
 - `-p 8081:8080 y -p 8082:8080`: Expone el puerto 8080 de ambos contenedores, en los puertos 8081 y 8082 de la máquina anfitriona.
 - `tomcat:latest`: Usa la última versión de la imagen oficial de Tomcat.
 
+### 3. - Muestra los contenedores dockers activos en ese momento
+
+Mostramos el listado de contenedores docker que tenemos activos y todos los que tenemos disponibles.
+
+```bash
+    docker ps -a
+```
+
+Lo que nos debería devolver algo parecido a:
+
+<img src="./capturas/3.png" alt="captura 3">
+
+### 4. - Fichero de Configuración del Balanceador NGINX
+
+En este punto, crearemos el fichero de balance `nginx.conf` en el mismo direcctorio donde estemos ejecutando la `consola de comandos`.
+
+```code
+events {}
+
+http {
+    upstream tomcat_backend {
+        server tomcat1:8080;
+        server tomcat2:8080;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://tomcat_backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+```
+
+Luego lanzaremos:
+
+```bash
+    docker run -d --name nginx --network tomcat-network -p 80:80 -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf nginx:latest
+```
+
+__Explicación comando__
+
+Aparte de lo ya explicado en otros puntos, tenemos una nueva parte añadida al comando:
+
+- `-v $(pwd)/nginx.conf:/etc/nginx/nginx.conf nginx:latest`: monta (copia) el archivo de configuración que hemos creado anteriormente, desde el directorio actual donde se está lanzando (`$(pwd)/nginx.conf`), en el directorio especificado del contenedor docker que estamos creando (`/etc/nginx/nginx.conf nginx:latest`).
+
+Luego de ejecutar el comando, vemos algo parecido a lo siguiente:
+
+<img src="./capturas/4.png" alt="captura 4">
+
+> Nota: en Windows, en la parte del `-v $(pwd)` puede dar problemas, provocando que no se genere bien el contenedor, que se genere un directorio en la ubicación del nginx.conf llamado `nginx.conf;C`, etc. Para evitar esto, lo mejor es intentar poner la ruta exacta donde está el `nginx.conf`.
+
+## Verificar que todo esta funcionando correctamente
+
+### 5. - Servidor NGINX
+
+Verifica el comportamiento en:
+
+```
+    http://localhost:8081
+```
+
+```
+    http://localhost:8082
+```
+
+```
+    http://localhost
+```
+
+```
+    http://localhost:80
+```
+
+Si vemos el mensaje estandar de que están funcionando en dichos puertos, continuamos .
+
+Realizamos el despliegue de la aplicación sample como se describe en la [tarea 3](../tarea3/).
+
+Luego repetimos los pasos del apartado anterior comprobando los puertos 8081,8082 y 80 de localhost.
+
+<img src="./capturas/5.1.png" alt="captura 5.1">
+
+<img src="./capturas/5.2.png" alt="captura 5.2">
+
+<img src="./capturas/5.3.png" alt="captura 5.3">
 
 
 </div>
