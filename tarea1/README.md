@@ -8,7 +8,7 @@ Los contenedores de Docker se construyen con imágenes de Docker. Por defecto, D
 
 Para verificar si podemos acceder a imágenes y descargarlas de Docker Hub, usamos:
 
-```code
+```bash
     docker run hello-world
 ```
 
@@ -20,7 +20,7 @@ Y nos devuelve lo siguiente:
 
 Después de usar Docker durante un tiempo, tendremos varios contenedores en ejecución y otros inactivos. Para ver los activos, utilizamos lo siguiente:
 
-```code
+```bash
     docker ps
 ```
 
@@ -37,7 +37,7 @@ Ambos contenedores ya no están en ejecución, pero aún existen en el sistema.
 
 Para ver todos los contenedores, activos e inactivos, docker ps con el conmutador -a:
 
-```code
+```bash
     docker ps -a
 ```
 
@@ -47,7 +47,7 @@ Y veremos lo siguiente:
 
 También podemos ver el ultimo contenedor creado con el conmutador -l
 
-```code
+```bash
     docker ps -l
 ```
 
@@ -55,7 +55,7 @@ También podemos ver el ultimo contenedor creado con el conmutador -l
 
 Al listar las imágenes de Docker de nuevo:
 
-```code
+```bash
     docker images
 ```
 

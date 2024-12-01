@@ -6,13 +6,13 @@
 
 Configurar un contenedor Docker que ejecute Apache Tomcat y que esté accesible desde un puerto específico en la máquina anfitriona.
 
-Consulta los comandos de docker en el siguiente [enlace](https://github.com/jpexposito/code-learn/blob/main/comun/docker/COMANDOS.md) proporcionado por el profesor.
+Consulta los comandos de docker en el siguiente [enlace](https://github.com/jpexposito/bash-learn/blob/main/comun/docker/COMANDOS.md) proporcionado por el profesor.
 
 ### Paso 1: Preparación del Entorno
 
 1.- Verificamos que Docker está instalado y funcionando con:
 
-```code
+```bash
     docker --version
 ```
 
@@ -22,7 +22,7 @@ Consulta los comandos de docker en el siguiente [enlace](https://github.com/jpex
 
 1.- Descargamos la imagen oficial de Apache Tomcat desde Docker Hub:
 
-```code
+```bash
     docker pull tomcat
 ```
 
@@ -32,7 +32,7 @@ Obtenemos lo siguiente:
 
 2.- Confirmamos que la imagen fue descargada correctamente con:
 
-```code
+```bash
     docker images
 ```
 
@@ -44,7 +44,7 @@ En mi caso, ya estaba en el ordenador desde hace tiempo. La más reciente, y la 
 
 1.- Iniciamos un contenedor basado en la imagen de Tomcat, y le asignamos un puerto específico (por ejemplo, 9090 en nuestra máquina anfitriona):
 
-```code
+```bash
     docker run -d -p 9090:8080 --name tomcat-server-tarea2 tomcat
 ```
 __Conmutadores:__
@@ -59,7 +59,7 @@ Al lanzar el comando, obtenemos lo siguiente:
 
 2.- Comprobamos si el contenedor está en ejecución:
 
-```code
+```bash
     docker ps
 ```
 
@@ -81,7 +81,7 @@ Si estuviesemos usando Docker en un servidor remoto, reemplazaríamos `localhost
 
 Tanto si accedemos por el navegador como si no, comprobamos los logs del servidor para ver si el arranque ha sido correcto:
 
-```code
+```bash
     docker logs tomcat-server-tarea2
 ```
 
@@ -91,7 +91,7 @@ Obteniendo:
 
 Verificamos también que no haya conflicto en los puertos:
 
-```code
+```bash
     lsof -i :9090
 ```
 
@@ -103,18 +103,18 @@ Lo que nos devuelve:
 
 1.- Detenemos el contenedor:
 
-```code
+```bash
     docker stop tomcat-server-tarea2
 ```
 
 2.- Eliminamos el contenedor:
 
-```code
+```bash
     docker rm tomcat-server
 ```
 3.- En caso de querer eliminar la imagen de Tomcat de nuestro sistema:
 
-```code
+```bash
     docker rmi tomcat
 ```
 
