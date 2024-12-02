@@ -27,7 +27,7 @@ Descargamos una aplicación de ejemplo desde el sitio oficial de Apache Tomcat. 
 Una vez descargado, lo copiamos al directorio webapps de nuestro contenedor Tomcat. Como estamos ejecutando Tomcat en Docker, ejecutamos:
 
 ```bash
-    docker cp ./recursos-compartidos/sample.war tomcat-server-tarea2:/usr/local/tomcat/webapps/
+    docker cp ../recursos-compartidos/sample.war tomcat-server-tarea2:/usr/local/tomcat/webapps/
 ```
 
 __Conmutadores:__
