@@ -111,3 +111,43 @@ VOLUME /data
 ```
 
 #### 13. ONBUILD
+
+Especifica instrucciones que se ejecutarán automáticamente cuando otra imagen se construya basada en esta. Es útil para crear imágenes base reutilizables.
+
+```bash
+ONBUILD RUN apt-get update && apt-get install -y python3
+```
+
+Un pequeño ejemplo de dockerfile es el siguiente:
+
+```bash
+# Usar una imagen base de Python
+FROM python:3.9-slim
+
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiar el archivo Python de la máquina local al contenedor
+COPY app.py .
+
+# Instalar las dependencias necesarias
+RUN pip install --no-cache-dir flask
+
+# Exponer el puerto que la aplicación utilizará
+EXPOSE 5000
+
+# Comando para ejecutar la aplicación cuando el contenedor arranca
+CMD ["python", "app.py"]
+```
+
+> Consulta los comandos de docker en el siguiente [enlace](https://github.com/jpexposito/code-learn/blob/main/comun/docker/COMANDOS.md), y las redes en docker en el siguiente [enlace](https://github.com/jpexposito/code-learn/tree/main/comun/docker/ud-6) aportados por el profesor.
+
+## Objetivo
+
+El objetivo de este ejercicio es crear un entorno con Docker que incluya un servidor Tomcat, una base de datos MariaDB y un cliente para acceder a la base de datos. Para esto, configuraremos los contenedores con redes personalizadas y un volumen común para persistir datos.
+
+#### Requisitos
+Crear una red Docker personalizada para los contenedores.
+Crear un contenedor Tomcat para desplegar una aplicación web.
+Crear un contenedor MariaDB para gestionar la base de datos.
+Utilizar un volumen común para persistir los datos de la base de datos.
