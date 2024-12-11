@@ -20,7 +20,7 @@ FROM tomcat:9.0
 FROM dbeaver/cloudbeaver:latest
 
 # Exponer puertos
-EXPOSE 8081 8082
+EXPOSE 8081
 
 # Volúmenes para MariaDB
 VOLUME /var/lib/mysql

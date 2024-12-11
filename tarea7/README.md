@@ -158,7 +158,7 @@ Para cumplir estos requisitos iniciales, realizaremos lo siguiente:
 ##### Paso 1: Creamos una red Docker personalizada para que los contenedores puedan comunicarse entre sí:
 
 ```bash
-    docker network create network-t7
+    docker network create tarea7-network
 ```
 
 <img src="./capturas/1.png" alt="captura 1">
@@ -166,77 +166,65 @@ Para cumplir estos requisitos iniciales, realizaremos lo siguiente:
 ##### Paso 2: Creamos un volumen comun para persistir los datos de la bbdd
 
 ```bash
-    docker volume create mariadb-data-t7
+    docker volume create tarea7-data
 ```
 
 <img src="./capturas/2.png" alt="captura 2">
 
-##### Paso 3: Creamos el Dockerfile
+##### Paso 3: Creamos un Docker Compose
 
-Que instalará Tomcat, MariaDB y CLoudBeaver.
+Lo logico sería crear un Dockerfile para gestionar los contenedores, pero como vamos a crear varios contenedores a partir de varias imagenes de docker, lo mejor es hacer un docker-compose para automatizar la creación.
 
 ```bash
-# Usar una imagen base de Ubuntu para las instalaciones adicionales
-FROM ubuntu:20.04
+version: '3.3'
+services:
+  mariadb:
+    image: mariadb:11.1.2
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: exampledb
+    networks:
+      - tarea7-network
+    volumes:
+      - tarea7-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
-# Instalar dependencias necesarias (como wget y curl)
-RUN apt-get update -y && \
-    apt-get install -y \
-    wget \
-    curl \
-    unzip \
-    mysql-client \
-    && rm -rf /var/lib/apt/lists/*
+  tomcat:
+    image: tomcat:10.1.9-jdk17
+    container_name: tomcat
+    networks:
+      - tarea7-network
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./sample.war:/usr/local/tomcat/webapps/sample.war
 
-# Configurar MariaDB usando la imagen oficial
-FROM mariadb:10.5
-
-# Configurar Tomcat usando la imagen oficial
-FROM tomcat:9.0
-
-# Descargar y configurar CloudBeaver utilizando la imagen oficial de CloudBeaver desde Docker Hub
-FROM dbeaver/cloudbeaver:latest
-
-# Exponer puertos
-EXPOSE 8080 8081
-
-# Volúmenes para MariaDB
-VOLUME /var/lib/mysql
-
-# Configuración de MariaDB: Establecer la contraseña root y crear la base de datos (esto es suficiente con las variables de entorno)
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_DATABASE=exampledb
-
-# Iniciar los servicios de MariaDB, Tomcat y CloudBeaver
-CMD service mysql start && \
-    /opt/tomcat/bin/catalina.sh run & \
-    /opt/cloudbeaver/cloudbeaver/bin/cloudbeaver & \
-    wait
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:23.3.0
+    container_name: cloudbeaver
+    networks:
+      - tarea7-network
+    ports:
+      - "8978:8978"
 ```
 
 #### ¿Qué estamos haciendo?
 
-Explicación del Dockerfile:
+Explicación del Docker Compose:
 
-- `Instalación de dependencias`: Se instalan los paquetes necesarios como __wget, curl, mysql-client, y unzip*__.
 
-- `Tomcat`: Se descarga e instala `Tomcat`, y se añade la aplicación de ejemplo (`sample.war`).
-
-- `MariaDB`: Se instala `MariaDB` utilizando el script oficial.
-
-- `CloudBeaver`: Se descarga e instala `CloudBeaver`, un cliente de base de datos basado en la web.
-
-- `Volúmenes`: Se crea un volumen para persistir los datos de `MariaDB` en /`var/lib/mysql`.
-
-- Comando `CMD`: El comando ejecuta `MariaDB`, luego `Tomcat` y finalmente `CloudBeaver`, para que los tres servicios estén activos y funcionen correctamente.
 
 ##### Paso 4: Construir y ejecutar la imagen
 
-Para construir la imagen desde el Dockerfile, usa el siguiente comando:
+Para construir las imagenes a partir del docker compose, usaríamos
 
 ```bash
-    docker build -t tomcat-mariadb-cloudbeaver .
+    docker-compose up
 ```
+
+> Recuerda añadir `-d` si quieres que se ejecute en 2o plano
 
 <img src="./capturas/4.1.png" alt="captura 4.1">
 
@@ -249,13 +237,6 @@ Lista los contenedores que tienes en tu equipo:
 
 <img src="./capturas/4.2.png" alt="captura 4.2">
 
-
-Luego, para ejecutar el contenedor que contiene Tomcat, MariaDB y CloudBeaver, usa:
-
-```bash
-    docker run -d -p 8080:8080 -p 8081:8081 tomcat-mariadb-cloudbeaver
-```
-
-<img src="./capturas/4.3.png" alt="captura 4.3">
+Y ahora deberíamos poder entrar desde el puerto de CloudBeaver `http://localhost:8978/`
 
 </div>
