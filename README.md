@@ -21,3 +21,10 @@ En este repositorio trabajaremos las diferentes tareas con  Docker, en la asigna
 - [Tarea 4](./tarea4/)
 
 - [Tarea 5](./tarea5/)
+
+- [Tarea 6](./tarea6/)
+
+- [Tarea 7](./tarea7/)
+
+- [Tarea 8](./tarea8/)
+
