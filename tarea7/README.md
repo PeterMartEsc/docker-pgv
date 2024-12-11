@@ -228,7 +228,6 @@ Para construir las imagenes a partir del docker compose, usaríamos
 
 <img src="./capturas/4.1.png" alt="captura 4.1">
 
-
 Lista los contenedores que tienes en tu equipo:
 
 ```bash
@@ -238,5 +237,8 @@ Lista los contenedores que tienes en tu equipo:
 <img src="./capturas/4.2.png" alt="captura 4.2">
 
 Y ahora deberíamos poder entrar desde el puerto de CloudBeaver `http://localhost:8978/`
+
+<img src="./capturas/5.png" alt="captura 5">
+
 
 </div>
