@@ -1,0 +1,50 @@
+version: '3.3'
+services:
+
+  mariadb:
+    image: mariadb:11.1.2
+    container_name: t8-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: exampledb
+    networks:
+      - t8-network
+    ports:
+      - "3306:3306"
+    volumes:
+      - t8-volumen:/var/lib/mysql
+
+  tomcat:
+    image: tomcat:10.1.9-jdk17
+    container_name: t8-tomcat1
+    networks:
+      - t8-network
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./sample.war:/usr/local/tomcat/webapps/sample.war
+
+  tomcat:
+    image: tomcat:10.1.9-jdk17
+    container_name: t8-tomcat2
+    networks:
+      - t8-network
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./sample.war:/usr/local/tomcat/webapps/sample.war
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:23.3.0
+    container_name: t8-cloudbeaver
+    networks:
+      - t8-network
+    ports:
+      - "8978:8978"
+
+volumes:
+  t8-volumen:
+
+networks:
+  t8-network:
+    driver: bridge
